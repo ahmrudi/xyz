@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Coming Soon - Start Bootstrap Theme</title>
+    <title>Coming Soon - Ahmad Rudi (XYZ)</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
@@ -85,7 +85,7 @@
   // Vide - Video Background Settings
   $('body').vide({
     mp4: "{% static '/mp4/bg.mp4' %}",
-    poster: "img/bg-mobile-fallback.jpg"
+    poster: "{% static 'img/bg-mobile-fallback.jpg' %}"
   }, {
     posterType: 'jpg'
   });
