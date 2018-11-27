@@ -4,7 +4,6 @@ db.sqlite3
 *.py[cod]
 *$py.class
 # Database
-db.sqlite3
 # C extensions
 *.so
 
@@ -28,6 +27,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*migrations/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
