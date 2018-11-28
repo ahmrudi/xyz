@@ -1,0 +1,13 @@
+{% extends "construction/body.html" %}{% load crispy_forms_tags %}
+{% block body %}
+<div class="row">
+ <div class="col-xs-12 col-12">
+ <form class="form" method="post">{% csrf_token %}
+  {{ form.username | as_crispy_field }}
+  {{ form.password | as_crispy_field }}
+  <button class="btn btn-primary" type="submit">Login</button>
+  <input type="hidden" name="next" value="{% if next == '/accounts/profile/' %}/{% else %}{{ next }}{% endif %}" />
+ </form>
+ </div>
+</div>
+{% endblock %}

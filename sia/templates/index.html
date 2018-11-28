@@ -1,0 +1,55 @@
+{% extends "construction/body.html" %}
+{% block body %}
+<div class="row">
+ <div class="col-xs-12 col-12">
+  <div class="table-responsive">
+	<table class="table">
+		<thead>
+			<tr class="text-center">
+				<th>DOKUMEN</th>
+				<th>PENERIMAAN</th>
+				<th>PENGEMBALIAN</th>
+				<th>BRANKAS</th>
+				<th>TGL DIBUAT</th>
+				<th>TGL DIUBAH</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for item in data %}
+			<tr>
+				<td><a href="{% url 'arsip:ubah' item.pk %}">{{ item.nomor_dokumen }}</a></td>
+				<td>{% if item.status == 0 %}-{% else %}<a target="blank" href="{% url 'arsip:surat-penerimaan' item.pk item.penerimaan.pk %}">{{ item.penerimaan.nomor }}</a>{% endif %}</td>
+				<td>{% if item.status == 2 %}{{ item.penyerahan.nomor }}{% else %}-{% endif %}</td>
+				<td>{{ item.nomor_brankas }}</td>
+				<td>{{ item.tgl_dibuat|date:"Y-m-d" }}</td>
+				<td>{{ item.tgl_diubah|date:"Y-m-d" }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+  </div>
+  {% if is_paginated %}
+	<ul class="pagination">
+	{% if page_obj.has_previous %}
+		<li class="page-item"><a class="page-link" href="?page=1"><<</a></li>
+		<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><</a></li>
+	{% endif %}
+	{% for num in page_obj.paginator.page_range %}
+	
+	{% if page_obj.number == num %}
+		<li class="page-item"><span class="page-link">{{num}}</span></li>
+	 {% elif num > page_obj.number|add:"-2" and num < page_obj.number|add:"2" %}
+		<li class="page-item"><a class="page-link" href="?page={{ num }}">{{num}}</a></li>
+	 {% endif %}
+	 
+	{% endfor %}
+	
+	{% if page_obj.has_next %}
+		<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">></a></li>
+		<li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">>></a></li>
+	{% endif %}
+	</ul>
+  {% endif %}
+ </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'surat_base.html' %}
+{% block body %}
+<b>PT Trisetia Citra Pesona</b><br/>
+<i>Jl. Tegar Beriman No. 1, Ruko Cibinong City Centre Blok B 30,<br/>Pakansari, Cibinong, Bogor, Jawa Barat</i>
+<hr/>
+<div class="title">BERITA ACARA</div>
+<div class="sub-title">PENERIMAAN ARSIP</div>
+<div class="nomor">NOMOR : {{ arsipmasuk.nomor }}</div>
+<p>Pada tanggal {{ arsipmasuk.tgl_dibuat|date:"d F Y" }} telah diterima dokumen yang akan di arsip dengan rincian sebagai berikut :</p>
+<table>
+	<tr>
+		<td width="1in">Kode Arsip</td>
+		<td width="5in">: {{ arsipmasuk.arsip.pk }}</td>
+	</tr>
+	<tr>
+		<td width="1in">Nomor Dokumen</td>
+		<td width="5in">: {{ arsipmasuk.arsip.nomor_dokumen }}</td>
+	</tr>
+	<tr>
+		<td width="1in">Jenis Arsip</td>
+		<td width="5in">: {{ arsipmasuk.arsip.get_jenis_display }}</td>
+	</tr>
+	<tr>
+		<td width="1in">Nomor Brankas</td>
+		<td width="5in">: {{ arsipmasuk.arsip.nomor_brankas }}</td>
+	</tr>
+	<tr>
+		<td width="1in">Divisi</td>
+		<td width="5in">: {{ arsipmasuk.arsip.get_divisi_display }}</td>
+	</tr>
+	<tr>
+		<td width="1in">Unit</td>
+		<td width="5in">: {{ arsipmasuk.arsip.get_unit_display }}</td>
+	</tr>
+	<tr>
+		<td width="1in">Tipe</td>
+		<td width="5in">: {{ arsipmasuk.arsip.get_tipe_display }}</td>
+	</tr>
+</table>
+<p>Demikian berita acara ini dibuat agar digunakan sebagaimana mestinya. Atas perhatiannya kami ucapkan terima kasih.</p>
+<table>
+	<tr>
+		<td class="ttd">Menyerahkan,</td>
+		<td class="ttd">Menerima,</td>
+		<td class="ttd">Mengetahui,</td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">( {{ arsipmasuk.yang_menyerahkan }} )</td>
+		<td style="text-align:center;">( {{ arsipmasuk.yang_menerima }} )</td>
+		<td style="text-align:center;">( {{ arsipmasuk.yang_mengetahui }} )</td>
+	</tr>
+</table>
+{% endblock %}
