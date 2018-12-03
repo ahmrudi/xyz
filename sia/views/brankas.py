@@ -11,7 +11,7 @@ from sia.forms import BrankasForm
 
 # Create your views here.
 class BrankasIndex(LoginRequiredMixin, generic.ListView):
-	template_name = "index.html"
+	template_name = "brankas/index.html"
 	context_object_name = "data"
 	paginate_by = 5
 	ordering_by = ['-tgl_diubah']

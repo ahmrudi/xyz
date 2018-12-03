@@ -1,7 +1,10 @@
 {% extends "construction/body.html" %}{% load crispy_forms_tags %}
 {% block body %}
 <div class="row">
- <div class="col-xs-12 col-12">
+ <div class="col-xs-12 col-sm-4">
+ {% if form.errors %}
+ <div class="alert alert-danger" role="alert">Data yang anda masukan salah.</div>
+ {% endif %}
  <form class="form" method="post">{% csrf_token %}
   {{ form.username | as_crispy_field }}
   {{ form.password | as_crispy_field }}

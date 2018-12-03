@@ -15,6 +15,9 @@ class Brankas(models.Model):
 	class Meta:
 		db_table = "brankas"
 		
+	def get_absolute_url(self):
+		return reverse("arsip:brankas_index")
+		
 	def __str__(self):
 		return self.kode
 	
@@ -65,6 +68,7 @@ class ArsipMasuk(models.Model):
 	
 	class Meta:
 		db_table = "arsip_masuk"
+		ordering = ['tgl_dibuat']
 		
 	def __str__(self):
 		return self.nomor

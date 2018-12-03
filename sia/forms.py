@@ -12,9 +12,7 @@ class BrankasForm(forms.ModelForm):
 		super(BrankasForm, self).__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.layout = Layout(
-			'nomor_dokumen',
-			'nomor_brankas', 'keterangan',
-			'jenis', 'divisi', 'unit', 'tipe',
+			'kode', 'keterangan', 'status',
 			ButtonHolder(Submit('simpan', 'Simpan'), Reset('reset', 'Reset'))
 		)
 		

@@ -9,31 +9,31 @@
 <p>Pada tanggal {{ arsipkeluar.tgl_dibuat|date:"d F Y" }} telah diambil dokumen dari arsip dengan rincian sebagai berikut :</p>
 <table>
 	<tr>
-		<td width="1in">Kode Arsip</td>
+		<td width="2in">Kode Arsip</td>
 		<td width="5in">: {{ arsipkeluar.arsip.pk }}</td>
 	</tr>
 	<tr>
-		<td width="1in">Nomor Dokumen</td>
+		<td width="2in">Nomor Dokumen</td>
 		<td width="5in">: {{ arsipkeluar.arsip.nomor_dokumen }}</td>
 	</tr>
 	<tr>
-		<td width="1in">Nomor Penerimaan</td>
+		<td width="2in">Nomor Penerimaan</td>
 		<td width="5in">: {{ arsipkeluar.arsip.penerimaan.nomor }}</td>
 	</tr>
 	<tr>
-		<td width="1in">Nomor Brankas</td>
+		<td width="2in">Nomor Brankas</td>
 		<td width="5in">: {{ arsipkeluar.arsip.nomor_brankas }}</td>
 	</tr>
 	<tr>
-		<td width="1in">Divisi</td>
+		<td width="2in">Divisi</td>
 		<td width="5in">: {{ arsipkeluar.arsip.get_divisi_display }}</td>
 	</tr>
 	<tr>
-		<td width="1in">Unit</td>
+		<td width="2in">Unit</td>
 		<td width="5in">: {{ arsipkeluar.arsip.get_unit_display }}</td>
 	</tr>
 	<tr>
-		<td width="1in">Tipe</td>
+		<td width="2in">Tipe</td>
 		<td width="5in">: {{ arsipkeluar.arsip.get_tipe_display }}</td>
 	</tr>
 </table>

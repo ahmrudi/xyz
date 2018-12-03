@@ -20,7 +20,7 @@ class ArsipIndex(PageTemplate, generic.ListView):
 	template_name = "index.html"
 	context_object_name = "data"
 	paginate_by = 5
-	ordering_by = ['-tgl_diubah']
+	ordering_by = ['tgl_dibuat']
 	title = "Data Arsip"
 		
 	def get_queryset(self, *args, **kwargs):
@@ -36,6 +36,7 @@ class ArsipBaru(PageTemplate, generic.edit.CreateView):
 		obj = form.save()
 		arsip = ArsipMasuk(arsip=obj)
 		arsip.dibuat_oleh = self.request.user
+		arsip.status = 1
 		arsip.save()
 		arsip.make_kode()
 		arsip.save()
@@ -46,6 +47,11 @@ class ArsipUbah(PageTemplate, generic.edit.UpdateView):
 	form_class = ArsipForm
 	model = Arsip
 	title = "Ubah Arsip"
+	
+class ArsipDetail(PageTemplate, generic.DetailView):
+	template_name = "detail.html"
+	model = Arsip
+	title = "Detail Arsip"
 		
 class ArsipMasukView(PageTemplate, generic.DetailView):
 	template_name = "detail.html"
@@ -102,12 +108,13 @@ class ArsipMasukUbah(LoginRequiredMixin, generic.edit.UpdateView):
 		return ArsipMasuk.objects.get(arsip_id=self.kwargs.get('pk'))
 		
 	def form_valid(self, form):
-		form.instance.arsip.status = 1
+		if form.instance.arsip.status == 0:
+			form.instance.arsip.status = 1
 		form.instance.arsip.save()
 		return super(ArsipMasukUbah, self).form_valid(form)
 		
 	def get_success_url(self):
-		return reverse('arsip:terima-detail', kwargs={'pk_arsip':self.object.arsip.pk, 'pk':self.object.pk})
+		return reverse('arsip:index')
 		
 class ArsipKeluarUbah(LoginRequiredMixin, generic.edit.UpdateView):
 	template_name = "form.html"
@@ -118,7 +125,7 @@ class ArsipKeluarUbah(LoginRequiredMixin, generic.edit.UpdateView):
 		return ArsipKeluar.objects.get(arsip_id=self.kwargs.get('pk'))
 		
 	def form_valid(self, form):
-		form.instance.arsip.status = 1
+		form.instance.arsip.status = 2
 		form.instance.arsip.save()
 		return super(ArsipKeluarUbah, self).form_valid(form)
 		
@@ -136,11 +143,14 @@ class ArsipKeluarBaru(LoginRequiredMixin, generic.edit.CreateView):
 	
 	def form_valid(self, form):
 		form.instance.dibuat_oleh = self.request.user
-		form.instance.arsip = Arsip.objects.get(pk=self.kwargs.get('pk'))
+		form.instance.arsip = Arsip.objects.get(pk=self.kwargs.get('pk_arsip'))
 		form.instance.arsip.status = 2
 		form.instance.arsip.save()
 		form.instance.make_kode()
 		return super(ArsipKeluarBaru, self).form_valid(form)
+		
+	def get_success_url(self, *args, **kwargs):
+		return reverse('arsip:index')
 		
 class ArsipKeluarDetail(LoginRequiredMixin, generic.DetailView):
 	template_name = "detail_penerimaan.html"
@@ -150,10 +160,19 @@ from django.conf import settings
 class SuratPenerimaan(LoginRequiredMixin, pdf_views.PDFTemplateResponseMixin, generic.DetailView):
 	template_name = "surat_penerimaan.html"
 	model = ArsipMasuk
-	base_url = 'file://{}/'.format(settings.STATIC_ROOT)
 			
 	def get_context_data(self, **kwargs):
 		nomor = self.get_object().nomor
 		return super(SuratPenerimaan, self).get_context_data(
+			title=nomor, **kwargs
+		)
+
+class SuratPengembalian(LoginRequiredMixin, pdf_views.PDFTemplateResponseMixin, generic.DetailView):
+	template_name = "surat_pengambilan.html"
+	model = ArsipKeluar
+			
+	def get_context_data(self, **kwargs):
+		nomor = self.get_object().nomor
+		return super(SuratPengembalian, self).get_context_data(
 			title=nomor, **kwargs
 		)

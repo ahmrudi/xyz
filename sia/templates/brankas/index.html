@@ -6,23 +6,17 @@
 	<table class="table">
 		<thead>
 			<tr class="text-center">
-				<th>DOKUMEN</th>
-				<th>PENERIMAAN</th>
-				<th>PENGEMBALIAN</th>
-				<th>BRANKAS</th>
-				<th>TGL DIBUAT</th>
-				<th>TGL DIUBAH</th>
+				<th>KODE</th>
+				<th>KETERANGAN</th>
+				<th>STATUS</th>
 			</tr>
 		</thead>
 		<tbody>
 		{% for item in data %}
 			<tr>
-				<td><a href="{% url 'arsip:ubah' item.pk %}">{{ item.nomor_dokumen }}</a></td>
-				<td>{% if item.status == 0 %}-{% else %}<a target="blank" href="{% url 'arsip:surat-penerimaan' item.pk item.penerimaan.pk %}">{{ item.penerimaan.nomor }}</a>{% endif %}</td>
-				<td>{% if item.status == 2 %}<a target="blank" href="{% url 'arsip:surat-pengembalian' item.pk item.penyerahan.pk %}">{{ item.penyerahan.nomor }}</a>{% else %}<a href="{% url 'arsip:buat-pengembalian' item.pk %}">Buat</a>{% endif %}</td>
-				<td>{{ item.nomor_brankas }}</td>
-				<td>{{ item.tgl_dibuat|date:"Y-m-d" }}</td>
-				<td>{{ item.tgl_diubah|date:"Y-m-d" }}</td>
+				<td><a href="">{{ item.kode }}</a></td>
+				<td>{{ item.keterangan }}</td>
+				<td>{{ item.get_status_display }}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
